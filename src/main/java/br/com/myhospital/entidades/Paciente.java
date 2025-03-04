@@ -71,4 +71,16 @@ public class Paciente {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public List<Consulta> getConsultas() {
+        return consultas;
+    }
 }

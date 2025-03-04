@@ -54,4 +54,12 @@ public class Consulta {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 }
