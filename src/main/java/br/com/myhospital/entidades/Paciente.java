@@ -18,7 +18,9 @@ public class Paciente {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @OneToOne(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "carteira_id")
     private CarteiraSaude carteira;
 
     public Paciente() {

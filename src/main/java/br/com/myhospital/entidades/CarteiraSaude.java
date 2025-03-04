@@ -2,6 +2,8 @@ package br.com.myhospital.entidades;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "tb_carteira")
 public class CarteiraSaude {
@@ -14,18 +16,19 @@ public class CarteiraSaude {
     @Column(unique = true)
     private String numeroCarteira;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "paciente_id")
+    @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL)
     private Paciente paciente;
+
+    private LocalDate emissao;
 
     public CarteiraSaude() {
     }
 
-    public CarteiraSaude(Long id, String numeroCarteira, Paciente paciente) {
+    public CarteiraSaude(Long id, String numeroCarteira, Paciente paciente, LocalDate emissao) {
         this.id = id;
         this.numeroCarteira = numeroCarteira;
         this.paciente = paciente;
+        this.emissao = emissao;
     }
 
     public Long getId() {
@@ -50,5 +53,13 @@ public class CarteiraSaude {
 
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
+    }
+
+    public LocalDate getEmissao() {
+        return emissao;
+    }
+
+    public void setEmissao(LocalDate emissao) {
+        this.emissao = emissao;
     }
 }
