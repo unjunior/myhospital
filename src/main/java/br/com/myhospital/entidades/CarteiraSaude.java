@@ -18,7 +18,6 @@ public class CarteiraSaude {
 
     @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL)
     private Paciente paciente;
-
     private LocalDate emissao;
 
     public CarteiraSaude() {

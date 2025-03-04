@@ -3,6 +3,9 @@ package br.com.myhospital.entidades;
 import br.com.myhospital.enumerados.Sexo;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tb_paciente")
 public class Paciente {
@@ -22,6 +25,9 @@ public class Paciente {
     @MapsId
     @JoinColumn(name = "carteira_id")
     private CarteiraSaude carteira;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Consulta> consultas = new ArrayList<>();
 
     public Paciente() {
     }
