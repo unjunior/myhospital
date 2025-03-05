@@ -1,35 +1,32 @@
 package br.com.myhospital.dto;
 
-import br.com.myhospital.entidades.CarteiraSaude;
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.enumerados.Sexo;
-import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacienteDto {
+public class PacienteConsultaDto {
 
     private Long id;
     private String nome;
     private String cpf;
     private Sexo sexo;
     private Long carteiraId;
-    private List<Long> consultaIds;
+    private List<Consulta> consultas = new ArrayList<>();
 
-    public PacienteDto() {
+    public PacienteConsultaDto() {
     }
 
-    public PacienteDto(Long id, String nome, String cpf, Sexo sexo, Long carteiraId, List<Long> consultaIds ) {
+    public PacienteConsultaDto(Long id, String nome, String cpf, Sexo sexo, Long carteiraId) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.sexo = sexo;
         this.carteiraId = carteiraId;
-        this.consultaIds = consultaIds;
     }
-    public PacienteDto(Paciente entity) {
+    public PacienteConsultaDto(Paciente entity) {
         id = entity.getId();
         nome = entity.getNome();
         cpf = entity.getCpf();
@@ -37,11 +34,8 @@ public class PacienteDto {
         if (entity.getCarteira() != null) {
             carteiraId = entity.getCarteira().getId();
         }
-        this.consultaIds = new ArrayList<>();
-        for(Consulta consulta : entity.getConsultas()){
-            this.consultaIds.add(consulta.getId());
-        }
     }
+
     public Long getId() {
         return id;
     }
@@ -60,9 +54,5 @@ public class PacienteDto {
 
     public Long getCarteiraId() {
         return carteiraId;
-    }
-
-    public List<Long> getConsultaIds() {
-        return consultaIds;
     }
 }

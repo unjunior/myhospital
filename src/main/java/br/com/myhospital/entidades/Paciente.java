@@ -30,6 +30,7 @@ public class Paciente {
     private CarteiraSaude carteira;
 
     @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference
     private List<Consulta> consultas = new ArrayList<>();
 
     public Paciente() {
