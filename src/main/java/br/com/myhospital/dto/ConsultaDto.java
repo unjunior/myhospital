@@ -10,23 +10,32 @@ public class ConsultaDto {
 
     private Long id;
     private LocalDateTime horario;
-    private Medico medico;
-    private Paciente paciente;
+   // private Medico medico;
+    //private Paciente paciente;
 
     public ConsultaDto() {
     }
 
-    public ConsultaDto(Long id, LocalDateTime horario, Medico medico, Paciente paciente) {
+    public ConsultaDto(Long id, LocalDateTime horario) {
         this.id = id;
         this.horario = horario;
-        this.medico = medico;
-        this.paciente = paciente;
+        //this.medico = medico;
+        //this.paciente = paciente;
     }
 
     public ConsultaDto(Consulta entity) {
         id = entity.getId();
         horario = entity.getHorario();
-        medico = entity.getMedico();
-        paciente = entity.getPaciente();
+       // medico = entity.getMedico();
+       // paciente = entity.getPaciente();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getHorario() {
+        return horario;
+    }
+
 }

@@ -15,25 +15,47 @@ public class PacienteDto {
     private String nome;
     private String cpf;
     private Sexo sexo;
-    private CarteiraSaude carteira;
-    private List<Consulta> consultas = new ArrayList<>();
+    private Long carteiraId;
+   // private List<Consulta> consultas = new ArrayList<>();
 
     public PacienteDto() {
     }
 
-    public PacienteDto(Long id, String nome, String cpf, Sexo sexo, CarteiraSaude carteira) {
+    public PacienteDto(Long id, String nome, String cpf, Sexo sexo, Long carteiraId) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.sexo = sexo;
-        this.carteira = carteira;
+        this.carteiraId = carteiraId;
     }
     public PacienteDto(Paciente entity) {
         id = entity.getId();
         nome = entity.getNome();
         cpf = entity.getCpf();
         sexo = entity.getSexo();
-        carteira = entity.getCarteira();
+        if (entity.getCarteira() != null) {
+            carteiraId = entity.getCarteira().getId();
+        }
+
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public Long getCarteiraId() {
+        return carteiraId;
+    }
 }

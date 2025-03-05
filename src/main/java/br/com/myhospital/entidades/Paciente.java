@@ -1,6 +1,8 @@
 package br.com.myhospital.entidades;
 
 import br.com.myhospital.enumerados.Sexo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class Paciente {
     @OneToOne
     @MapsId
     @JoinColumn(name = "carteira_id")
+    @JsonManagedReference
     private CarteiraSaude carteira;
 
     @OneToMany(mappedBy = "paciente")

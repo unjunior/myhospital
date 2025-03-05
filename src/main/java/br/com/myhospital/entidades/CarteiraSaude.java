@@ -1,5 +1,7 @@
 package br.com.myhospital.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +19,7 @@ public class CarteiraSaude {
     private String numeroCarteira;
 
     @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL)
+    @JsonBackReference
     private Paciente paciente;
     private LocalDate emissao;
 
