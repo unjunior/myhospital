@@ -3,6 +3,8 @@ package br.com.myhospital.controlador;
 import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.servicos.MedicoServico;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,4 +23,12 @@ public class MedicoControlador {
         MedicoDto dto = medicoServico.findById(id);
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping
+    public ResponseEntity<Page<MedicoDto>> findAll(Pageable pageable){
+        Page<MedicoDto> list = medicoServico.findAll(pageable);
+        return ResponseEntity.ok().body(list);
+    }
+
+
 }
