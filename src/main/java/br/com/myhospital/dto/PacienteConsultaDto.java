@@ -2,7 +2,7 @@ package br.com.myhospital.dto;
 
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Paciente;
-import br.com.myhospital.enumerados.Sexo;
+import br.com.myhospital.enuns.Sexo;
 
 import java.util.ArrayList;
 import java.util.List;

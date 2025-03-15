@@ -1,7 +1,6 @@
 package br.com.myhospital.entidades;
 
-import br.com.myhospital.enumerados.Sexo;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import br.com.myhospital.enuns.Sexo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -23,7 +22,7 @@ public class Paciente {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
-    @OneToOne
+    @OneToOne(optional = true)
     @MapsId
     @JoinColumn(name = "carteira_id")
     @JsonManagedReference

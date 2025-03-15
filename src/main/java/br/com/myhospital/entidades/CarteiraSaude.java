@@ -1,7 +1,6 @@
 package br.com.myhospital.entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,7 +11,6 @@ public class CarteiraSaude {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     @Column(unique = true)
@@ -64,4 +62,6 @@ public class CarteiraSaude {
     public void setEmissao(LocalDate emissao) {
         this.emissao = emissao;
     }
+
+
 }

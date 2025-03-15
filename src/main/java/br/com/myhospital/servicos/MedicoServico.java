@@ -29,4 +29,15 @@ public class MedicoServico {
         Page<Medico> result = medicoRepositorio.findAll(pageable);
         return result.map(x -> new MedicoDto(x));
     }
+
+    @Transactional
+    public MedicoDto insert (MedicoDto dto){
+        Medico entity = new Medico();
+        entity.setNome(dto.getNome());
+        entity.setEspecialidade(dto.getEspecialidade());
+        entity.setCrm(dto.getCrm());
+
+        entity = medicoRepositorio.save(entity);
+        return new MedicoDto(entity);
+    }
 }

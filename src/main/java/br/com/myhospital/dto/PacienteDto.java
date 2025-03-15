@@ -1,10 +1,8 @@
 package br.com.myhospital.dto;
 
-import br.com.myhospital.entidades.CarteiraSaude;
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Paciente;
-import br.com.myhospital.enumerados.Sexo;
-import jakarta.persistence.*;
+import br.com.myhospital.enuns.Sexo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +17,13 @@ public class PacienteDto {
     private List<Long> consultaIds;
 
     public PacienteDto() {
+    }
+
+    public PacienteDto(Long id, String nome, String cpf, Sexo sexo) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.sexo = sexo;
     }
 
     public PacienteDto(Long id, String nome, String cpf, Sexo sexo, Long carteiraId, List<Long> consultaIds ) {

@@ -18,6 +18,14 @@ public class MedicoDto {
     public MedicoDto() {
     }
 
+    public MedicoDto(Long id, String nome, Especialidade especialidade, String crm) {
+        this.id = id;
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.crm = crm;
+
+    }
+
     public MedicoDto(Long id, String nome, Especialidade especialidade, String crm, List<Long> consultaIds) {
         this.id = id;
         this.nome = nome;
