@@ -1,10 +1,14 @@
 package br.com.myhospital.servicos;
 
 import br.com.myhospital.dto.ConsultaDto;
+import br.com.myhospital.dto.ConsultaPacienteMedicoDto;
 import br.com.myhospital.dto.PacienteDto;
 import br.com.myhospital.entidades.Consulta;
+import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.ConsultaRepositorio;
+import br.com.myhospital.repositorio.MedicoRepositorio;
+import br.com.myhospital.repositorio.PacienteRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +23,12 @@ public class ConsultaServico {
     @Autowired
     private ConsultaRepositorio consultaRepositorio;
 
+    @Autowired
+    private PacienteRepositorio pacienteRepositorio;
+
+    @Autowired
+    private MedicoRepositorio medicoRepositorio;
+
     @Transactional(readOnly = true)
     public ConsultaDto findById (Long id){
 
@@ -31,5 +41,20 @@ public class ConsultaServico {
     public Page<ConsultaDto> findAll(Pageable pageable) {
         Page<Consulta> result = consultaRepositorio.findAll(pageable);
         return result.map(x -> new ConsultaDto(x));
+    }
+
+    @Transactional
+    public ConsultaPacienteMedicoDto insert(ConsultaPacienteMedicoDto dto){
+
+        Paciente p = pacienteRepositorio.getReferenceById(dto.getPaciente().getId());
+        Medico m = medicoRepositorio.getReferenceById(dto.getMedico().getId());
+
+        Consulta consulta = new Consulta();
+        consulta.setHorario(dto.getHorario());
+        consulta.setPaciente(p);
+        consulta.setMedico(m);
+        consulta = consultaRepositorio.save(consulta);
+
+        return new ConsultaPacienteMedicoDto(consulta);
     }
 }
