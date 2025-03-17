@@ -24,7 +24,7 @@ public class Paciente {
 
     @OneToOne(optional = true)
     @MapsId
-    @JoinColumn(name = "carteira_id")
+    @JoinColumn(name = "carteira_id", nullable = true)
     @JsonManagedReference
     private CarteiraSaude carteira;
 
