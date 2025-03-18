@@ -41,4 +41,10 @@ public class ConsultaControlador {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ConsultaPacienteMedicoDto> update (@PathVariable Long id, @RequestBody ConsultaPacienteMedicoDto dto){
+        dto = consultaServico.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 }

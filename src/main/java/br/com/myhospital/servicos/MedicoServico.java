@@ -40,4 +40,15 @@ public class MedicoServico {
         entity = medicoRepositorio.save(entity);
         return new MedicoDto(entity);
     }
+
+    @Transactional
+    public MedicoDto update (Long id, MedicoDto dto){
+        Medico entity = medicoRepositorio.getReferenceById(id);
+        entity.setNome(dto.getNome());
+        entity.setCrm(dto.getCrm());
+        entity.setEspecialidade(dto.getEspecialidade());
+
+        entity = medicoRepositorio.save(entity);
+        return  new MedicoDto(entity);
+    }
 }

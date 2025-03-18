@@ -1,9 +1,6 @@
 package br.com.myhospital.controlador;
 
-import br.com.myhospital.dto.CarteiraSaudeDto;
-import br.com.myhospital.dto.CarteiraSaudePacienteDto;
-import br.com.myhospital.dto.ConsultaDto;
-import br.com.myhospital.dto.PacienteDto;
+import br.com.myhospital.dto.*;
 import br.com.myhospital.servicos.CarteiraSaudeServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,5 +37,11 @@ public class CarteiraSaudeControlador {
                 .path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CarteiraSaudeDto> update (@PathVariable Long id, @RequestBody CarteiraSaudeDto dto){
+        dto = carteiraSaudeServico.update(id, dto);
+        return ResponseEntity.ok(dto);
     }
 }

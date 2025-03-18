@@ -2,9 +2,7 @@ package br.com.myhospital.servicos;
 
 import br.com.myhospital.dto.CarteiraSaudeDto;
 import br.com.myhospital.dto.CarteiraSaudePacienteDto;
-import br.com.myhospital.dto.ConsultaDto;
 import br.com.myhospital.entidades.CarteiraSaude;
-import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
@@ -61,4 +59,15 @@ public class CarteiraSaudeServico {
 
         return new CarteiraSaudePacienteDto(carteiraSaude);
     }
+
+    @Transactional
+    public CarteiraSaudeDto update (Long id, CarteiraSaudeDto dto){
+        CarteiraSaude entity = carteiraSaudeRepositorio.getReferenceById(id);
+        entity.setNumeroCarteira(dto.getNumeroCarteira());
+        entity.setEmissao(dto.getEmissao());
+
+        return  new CarteiraSaudeDto(entity);
+    }
+
+
 }

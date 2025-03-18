@@ -2,6 +2,7 @@ package br.com.myhospital.servicos;
 
 import br.com.myhospital.dto.ConsultaDto;
 import br.com.myhospital.dto.ConsultaPacienteMedicoDto;
+import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.dto.PacienteDto;
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Medico;
@@ -56,5 +57,20 @@ public class ConsultaServico {
         consulta = consultaRepositorio.save(consulta);
 
         return new ConsultaPacienteMedicoDto(consulta);
+    }
+
+    @Transactional
+    public ConsultaPacienteMedicoDto update (Long id, ConsultaPacienteMedicoDto dto){
+        Consulta entity = consultaRepositorio.getReferenceById(id);
+        entity.setHorario(dto.getHorario());
+
+        Paciente p = pacienteRepositorio.getReferenceById(dto.getPaciente().getId());
+        entity.setPaciente(p);
+        Medico m = medicoRepositorio.getReferenceById(dto.getMedico().getId());
+        entity.setMedico(m);
+
+        entity = consultaRepositorio.save(entity);
+        return new ConsultaPacienteMedicoDto(entity);
+
     }
 }

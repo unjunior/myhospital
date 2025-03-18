@@ -39,4 +39,10 @@ public class PacienteControlador {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<PacienteDto> update (@PathVariable Long id, @RequestBody PacienteDto dto){
+        dto = pacienteServico.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 }

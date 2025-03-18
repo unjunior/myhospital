@@ -39,5 +39,9 @@ public class MedicoControlador {
         return ResponseEntity.created(uri).body(dto);
     }
 
-
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<MedicoDto> update (@PathVariable Long id, @RequestBody MedicoDto dto){
+        dto = medicoServico.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 }
