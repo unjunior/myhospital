@@ -73,4 +73,9 @@ public class ConsultaServico {
         return new ConsultaPacienteMedicoDto(entity);
 
     }
+
+    @Transactional
+    public void delete(Long id){
+        consultaRepositorio.deleteById(id);
+    }
 }

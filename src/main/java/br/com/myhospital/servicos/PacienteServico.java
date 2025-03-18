@@ -66,4 +66,9 @@ public class PacienteServico {
         entity = pacienteRepositorio.save(entity);
         return new PacienteDto(entity);
     }
+
+    @Transactional
+    public void delete(Long id){
+        pacienteRepositorio.deleteById(id);
+    }
 }

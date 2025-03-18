@@ -44,4 +44,10 @@ public class MedicoControlador {
         dto = medicoServico.update(id, dto);
         return ResponseEntity.ok(dto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Long id){
+        medicoServico.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

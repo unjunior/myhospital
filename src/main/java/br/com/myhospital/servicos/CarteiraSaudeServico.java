@@ -69,5 +69,8 @@ public class CarteiraSaudeServico {
         return  new CarteiraSaudeDto(entity);
     }
 
-
+    @Transactional
+    public void delete(Long id){
+        carteiraSaudeRepositorio.deleteById(id);
+    }
 }
