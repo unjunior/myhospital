@@ -69,6 +69,10 @@ public class PacienteServico {
 
     @Transactional
     public void delete(Long id){
-        pacienteRepositorio.deleteById(id);
+        Paciente paciente = pacienteRepositorio.findById(id)
+                .orElseThrow(()-> new RuntimeException("Paciente não encontrado"));
+
+        pacienteRepositorio.delete(paciente);
+
     }
 }

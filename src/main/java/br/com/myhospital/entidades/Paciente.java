@@ -28,7 +28,7 @@ public class Paciente {
     @JsonManagedReference
     private CarteiraSaude carteira;
 
-    @OneToMany(mappedBy = "paciente")
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Consulta> consultas = new ArrayList<>();
 
