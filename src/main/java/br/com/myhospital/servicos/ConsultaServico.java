@@ -2,23 +2,21 @@ package br.com.myhospital.servicos;
 
 import br.com.myhospital.dto.ConsultaDto;
 import br.com.myhospital.dto.ConsultaPacienteMedicoDto;
-import br.com.myhospital.dto.MedicoDto;
-import br.com.myhospital.dto.PacienteDto;
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.ConsultaRepositorio;
 import br.com.myhospital.repositorio.MedicoRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class ConsultaServico {
@@ -84,6 +82,15 @@ public class ConsultaServico {
 
     @Transactional
     public void delete(Long id){
-        consultaRepositorio.deleteById(id);
+        if(!consultaRepositorio.existsById(id)){
+            throw new ExceptionsGenericasServico("Consulta não encontrada!");
+        }
+        try{
+            consultaRepositorio.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            new DatabaseExceptionServico("Falha de integridade referencial");
+        }
+
     }
 }

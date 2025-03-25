@@ -1,21 +1,19 @@
 package br.com.myhospital.servicos;
 
-import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.dto.PacienteDto;
 import br.com.myhospital.entidades.CarteiraSaude;
-import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class PacienteServico {
@@ -77,10 +75,15 @@ public class PacienteServico {
 
     @Transactional
     public void delete(Long id){
-        Paciente paciente = pacienteRepositorio.findById(id)
-                .orElseThrow(()-> new RuntimeException("Paciente não encontrado"));
-
-        pacienteRepositorio.delete(paciente);
+        if(!pacienteRepositorio.existsById(id)){
+            throw new ExceptionsGenericasServico("Paciente não encontrado!");
+        }
+        try{
+            pacienteRepositorio.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            new DatabaseExceptionServico("Falha de integridade referencial");
+        }
 
     }
 }

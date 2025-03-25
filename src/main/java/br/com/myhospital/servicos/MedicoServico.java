@@ -3,12 +3,15 @@ package br.com.myhospital.servicos;
 import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.repositorio.MedicoRepositorio;
+import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -59,8 +62,19 @@ public class MedicoServico {
 
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id){
-        medicoRepositorio.deleteById(id);
+
+        if(!medicoRepositorio.existsById(id)){
+            throw new ExceptionsGenericasServico("Médico não encontrado!");
+        }
+
+        try{
+            medicoRepositorio.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            new DatabaseExceptionServico("Falha de integridade referencial");
+        }
+
     }
 }

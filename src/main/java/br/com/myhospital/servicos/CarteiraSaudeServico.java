@@ -6,15 +6,15 @@ import br.com.myhospital.entidades.CarteiraSaude;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class CarteiraSaudeServico {
@@ -79,6 +79,14 @@ public class CarteiraSaudeServico {
 
     @Transactional
     public void delete(Long id){
-        carteiraSaudeRepositorio.deleteById(id);
+        if(!carteiraSaudeRepositorio.existsById(id)){
+            throw new ExceptionsGenericasServico("Carteira de saúde não encontrada!");
+        }
+        try{
+            carteiraSaudeRepositorio.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            new DatabaseExceptionServico("Falha de integridade referencial");
+        }
     }
 }
