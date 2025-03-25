@@ -10,6 +10,7 @@ import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.ConsultaRepositorio;
 import br.com.myhospital.repositorio.MedicoRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +34,10 @@ public class ConsultaServico {
     @Transactional(readOnly = true)
     public ConsultaDto findById (Long id){
 
-        Optional<Consulta> result = consultaRepositorio.findById(id);
-        Consulta consulta = result.get();
+        Consulta consulta = consultaRepositorio.findById(id).orElseThrow(
+                () -> new ExceptionsGenericasServico("Consulta não encontrada!")
+        );
+
         return new ConsultaDto(consulta);
     }
 

@@ -1,7 +1,7 @@
 package br.com.myhospital.controlador.handlers;
 
 import br.com.myhospital.dto.ErrosCustomizadosDto;
-import br.com.myhospital.servicos.exceptions.ExceptionsGenericas;
+import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,8 @@ import java.time.Instant;
 @ControllerAdvice
 public class HandlerControladorExceptions {
 
-    @ExceptionHandler(ExceptionsGenericas.class)
-    public ResponseEntity<ErrosCustomizadosDto> idNaoEncontrado(ExceptionsGenericas e, HttpServletRequest request){
+    @ExceptionHandler(ExceptionsGenericasServico.class)
+    public ResponseEntity<ErrosCustomizadosDto> idNaoEncontrado(ExceptionsGenericasServico e, HttpServletRequest request){
 
         HttpStatus status = HttpStatus.NOT_FOUND;
         ErrosCustomizadosDto erro = new ErrosCustomizadosDto(Instant.now(), status.value(),

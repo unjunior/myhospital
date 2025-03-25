@@ -3,13 +3,12 @@ package br.com.myhospital.servicos;
 import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.repositorio.MedicoRepositorio;
+import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 public class MedicoServico {
@@ -19,8 +18,9 @@ public class MedicoServico {
 
     @Transactional(readOnly = true)
     public MedicoDto findById (Long id){
-        Optional<Medico> result = medicoRepositorio.findById(id);
-        Medico medico = result.get();
+        Medico medico = medicoRepositorio.findById(id).orElseThrow(
+                () ->  new ExceptionsGenericasServico("O id do médico não foi encontrado!")
+        );
         return new MedicoDto(medico);
     }
 

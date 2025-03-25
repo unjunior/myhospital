@@ -6,6 +6,7 @@ import br.com.myhospital.entidades.CarteiraSaude;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +26,9 @@ public class CarteiraSaudeServico {
 
     @Transactional(readOnly = true)
     public CarteiraSaudeDto findById(Long id){
-        Optional<CarteiraSaude> result = carteiraSaudeRepositorio.findById(id);
-        CarteiraSaude carteiraSaude = result.get();
+        CarteiraSaude carteiraSaude = carteiraSaudeRepositorio.findById(id).orElseThrow(
+                ()-> new ExceptionsGenericasServico("Carteira de saúde não encontrada!")
+        );
         return new CarteiraSaudeDto(carteiraSaude);
     }
 

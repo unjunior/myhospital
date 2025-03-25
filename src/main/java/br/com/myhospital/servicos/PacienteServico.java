@@ -7,6 +7,7 @@ import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
+import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,8 +29,10 @@ public class PacienteServico {
     @Transactional(readOnly = true)
     public PacienteDto findById(Long id){
 
-        Optional<Paciente> result = pacienteRepositorio.findById(id);
-        Paciente paciente = result.get();
+        Paciente paciente = pacienteRepositorio.findById(id).orElseThrow(
+                ()-> new ExceptionsGenericasServico("Id do paciente não foi encontrado!")
+        );
+
         return new PacienteDto(paciente);
     }
 
