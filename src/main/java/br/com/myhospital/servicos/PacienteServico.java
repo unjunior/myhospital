@@ -61,13 +61,18 @@ public class PacienteServico {
 
     @Transactional
     public PacienteDto update (Long id, PacienteDto dto){
-        Paciente entity = pacienteRepositorio.getReferenceById(id);
-        entity.setNome(dto.getNome());
-        entity.setCpf(dto.getCpf());
-        entity.setSexo(dto.getSexo());
+        try{
+            Paciente entity = pacienteRepositorio.getReferenceById(id);
+            entity.setNome(dto.getNome());
+            entity.setCpf(dto.getCpf());
+            entity.setSexo(dto.getSexo());
 
-        entity = pacienteRepositorio.save(entity);
-        return new PacienteDto(entity);
+            entity = pacienteRepositorio.save(entity);
+            return new PacienteDto(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ExceptionsGenericasServico("ID do paciente não encontrado para atualização!");
+        }
     }
 
     @Transactional

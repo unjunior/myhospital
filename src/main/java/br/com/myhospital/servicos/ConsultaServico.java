@@ -11,6 +11,7 @@ import br.com.myhospital.repositorio.ConsultaRepositorio;
 import br.com.myhospital.repositorio.MedicoRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,17 +65,21 @@ public class ConsultaServico {
 
     @Transactional
     public ConsultaPacienteMedicoDto update (Long id, ConsultaPacienteMedicoDto dto){
-        Consulta entity = consultaRepositorio.getReferenceById(id);
-        entity.setHorario(dto.getHorario());
+        try {
+            Consulta entity = consultaRepositorio.getReferenceById(id);
+            entity.setHorario(dto.getHorario());
 
-        Paciente p = pacienteRepositorio.getReferenceById(dto.getPaciente().getId());
-        entity.setPaciente(p);
-        Medico m = medicoRepositorio.getReferenceById(dto.getMedico().getId());
-        entity.setMedico(m);
+            Paciente p = pacienteRepositorio.getReferenceById(dto.getPaciente().getId());
+            entity.setPaciente(p);
+            Medico m = medicoRepositorio.getReferenceById(dto.getMedico().getId());
+            entity.setMedico(m);
 
-        entity = consultaRepositorio.save(entity);
-        return new ConsultaPacienteMedicoDto(entity);
-
+            entity = consultaRepositorio.save(entity);
+            return new ConsultaPacienteMedicoDto(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ExceptionsGenericasServico("Consulta não encontrada para atualização");
+        }
     }
 
     @Transactional

@@ -4,6 +4,7 @@ import br.com.myhospital.dto.MedicoDto;
 import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.repositorio.MedicoRepositorio;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -43,13 +44,19 @@ public class MedicoServico {
 
     @Transactional
     public MedicoDto update (Long id, MedicoDto dto){
-        Medico entity = medicoRepositorio.getReferenceById(id);
-        entity.setNome(dto.getNome());
-        entity.setCrm(dto.getCrm());
-        entity.setEspecialidade(dto.getEspecialidade());
+        try{
+            Medico entity = medicoRepositorio.getReferenceById(id);
+            entity.setNome(dto.getNome());
+            entity.setCrm(dto.getCrm());
+            entity.setEspecialidade(dto.getEspecialidade());
 
-        entity = medicoRepositorio.save(entity);
-        return  new MedicoDto(entity);
+            entity = medicoRepositorio.save(entity);
+            return  new MedicoDto(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ExceptionsGenericasServico("ID não localizado para atualização do médico!");
+        }
+
     }
 
     @Transactional

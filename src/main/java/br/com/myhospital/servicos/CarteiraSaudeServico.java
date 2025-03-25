@@ -7,6 +7,7 @@ import br.com.myhospital.entidades.Paciente;
 import br.com.myhospital.repositorio.CarteiraSaudeRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -64,11 +65,16 @@ public class CarteiraSaudeServico {
 
     @Transactional
     public CarteiraSaudeDto update (Long id, CarteiraSaudeDto dto){
-        CarteiraSaude entity = carteiraSaudeRepositorio.getReferenceById(id);
-        entity.setNumeroCarteira(dto.getNumeroCarteira());
-        entity.setEmissao(dto.getEmissao());
+        try {
+            CarteiraSaude entity = carteiraSaudeRepositorio.getReferenceById(id);
+            entity.setNumeroCarteira(dto.getNumeroCarteira());
+            entity.setEmissao(dto.getEmissao());
 
-        return  new CarteiraSaudeDto(entity);
+            return  new CarteiraSaudeDto(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ExceptionsGenericasServico("ID da carteira de saúde não encontrado para atualização!");
+        }
     }
 
     @Transactional
