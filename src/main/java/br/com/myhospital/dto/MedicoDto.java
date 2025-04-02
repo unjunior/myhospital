@@ -3,6 +3,9 @@ package br.com.myhospital.dto;
 import br.com.myhospital.entidades.Consulta;
 import br.com.myhospital.entidades.Medico;
 import br.com.myhospital.enuns.Especialidade;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +13,12 @@ import java.util.List;
 public class MedicoDto {
 
     private Long id;
+    @Size(min = 3, max = 50, message = "O nome do médico deve ter entre 3 e 50 caracteres!")
+    @NotBlank(message = "O nome é obrigatório!")
     private String nome;
     private Especialidade especialidade;
+
+    @Column(unique = true)
     private String crm;
     private List<Long> consultaIds;
 

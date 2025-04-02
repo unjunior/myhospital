@@ -2,13 +2,18 @@ package br.com.myhospital.dto;
 
 import br.com.myhospital.entidades.CarteiraSaude;
 import br.com.myhospital.entidades.Paciente;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public class CarteiraSaudeDto {
 
     private Long id;
+
+    @Column(unique = true)
     private String numeroCarteira;
+
     private LocalDate emissao;
     private Long pacienteId;
 
