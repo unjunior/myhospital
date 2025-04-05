@@ -9,6 +9,7 @@ import br.com.myhospital.repositorio.ConsultaRepositorio;
 import br.com.myhospital.repositorio.MedicoRepositorio;
 import br.com.myhospital.repositorio.PacienteRepositorio;
 import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
+import br.com.myhospital.servicos.exceptions.EntidadeNaoProcessada;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class ConsultaServico {
@@ -53,7 +56,13 @@ public class ConsultaServico {
         Medico m = medicoRepositorio.getReferenceById(dto.getMedico().getId());
 
         Consulta consulta = new Consulta();
+
         consulta.setHorario(dto.getHorario());
+
+        if (dto.getHorario().isBefore(LocalDateTime.now())){
+            throw new EntidadeNaoProcessada("Não é possível cadastrar uma data no passado!");
+        }
+
         consulta.setPaciente(p);
         consulta.setMedico(m);
         consulta = consultaRepositorio.save(consulta);

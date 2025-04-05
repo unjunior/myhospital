@@ -1,7 +1,8 @@
 package br.com.myhospital.controlador.handlers;
 
-import br.com.myhospital.dto.ErrosCustomizadosDto;
+import br.com.myhospital.dto.excecoesDto.ErrosCustomizadosDto;
 import br.com.myhospital.servicos.exceptions.DatabaseExceptionServico;
+import br.com.myhospital.servicos.exceptions.EntidadeNaoProcessada;
 import br.com.myhospital.servicos.exceptions.ExceptionsGenericasServico;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -33,4 +34,17 @@ public class ControladorExceptionsHandler {
 
         return ResponseEntity.status(status).body(erro);
     }
+
+    @ExceptionHandler(EntidadeNaoProcessada.class)
+    public ResponseEntity<ErrosCustomizadosDto> horario(EntidadeNaoProcessada e, HttpServletRequest request){
+
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        ErrosCustomizadosDto erro = new ErrosCustomizadosDto(Instant.now(), status.value(),
+                e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(erro);
+    }
+
+
+
 }

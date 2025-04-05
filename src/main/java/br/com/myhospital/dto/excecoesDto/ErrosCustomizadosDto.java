@@ -1,4 +1,4 @@
-package br.com.myhospital.dto;
+package br.com.myhospital.dto.excecoesDto;
 
 import java.time.Instant;
 
