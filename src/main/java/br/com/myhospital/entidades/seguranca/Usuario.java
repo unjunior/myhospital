@@ -20,7 +20,7 @@ public class Usuario implements UserDetails {
     private String telefone;
     private String senha;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_usuario_papel",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "papel_id"))
