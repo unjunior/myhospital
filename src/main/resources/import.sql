@@ -26,8 +26,8 @@ INSERT INTO tb_consulta(horario, medico_id, paciente_id) VALUES('2025-06-18 10:0
 
 -- MODELO USUÁRIO / PAPEIS
 
-INSERT INTO tb_usuario (nome, email, telefone, senha) VALUES ('Alex', 'alex@gmail.com', '(71)98888-8888','123456');
-INSERT INTO tb_usuario (nome, email, telefone, senha) VALUES ('Maria', 'maria@gmail.com', '(71)97777-7777','123456');
+INSERT INTO tb_usuario (nome, email, telefone, senha) VALUES ('Alex', 'alex@gmail.com', '(71)98888-8888','$2a$10$KSDm/4vsuhI8hvsa.p26JOlRRSJTUztzBL0aErcugdwUqkRJ/KqTW');
+INSERT INTO tb_usuario (nome, email, telefone, senha) VALUES ('Maria', 'maria@gmail.com', '(71)97777-7777','$2a$10$KSDm/4vsuhI8hvsa.p26JOlRRSJTUztzBL0aErcugdwUqkRJ/KqTW');
 
 INSERT INTO tb_papel (permissao) VALUES ('ADMIN');
 INSERT INTO tb_papel (permissao) VALUES ('COMUM');
