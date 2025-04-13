@@ -1,12 +1,13 @@
 package br.com.myhospital.entidades.seguranca;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_papel")
-public class Papel {
+public class Papel implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,5 +53,10 @@ public class Papel {
             return false;
         Papel other = (Papel) obj;
         return Objects.equals(permissao, other.permissao);
+    }
+
+    @Override
+    public String getAuthority() {
+        return permissao;
     }
 }
